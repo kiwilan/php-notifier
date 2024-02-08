@@ -26,11 +26,16 @@ composer require kiwilan/php-notifier
 
 ## Usage
 
-This package offer a support for Discord and Slack webhooks, but Slack has only basic support (without legacy API support), for more, you can use [`laravel/slack-notification-channel`](https://github.com/laravel/slack-notification-channel). To avoid dependencies, this package doesn't use it.
+This package offer a support for Discord and Slack webhooks, and emails with `symfony/mailer`.
 
 -   Discord: support message and rich embeds webhooks.
--   Slack: support message, attachments and blocks webhooks.
+-   Slack: support message, attachments and blocks webhooks (without legacy API support).
 -   Mail: support message and attachments with `symfony/mailer`.
+
+HTTP requests use native stream context to send data, `curl` and `guzzle` can be used as option (default is `stream`).
+
+> [!WARNING]
+> If you use `guzzle`, you need to install `guzzlehttp/guzzle` package.
 
 ### Discord
 
@@ -119,5 +124,5 @@ The MIT License (MIT). Please see [License File](LICENSE.md) for more informatio
 [license-href]: https://github.com/kiwilan/php-notifier/blob/main/README.md
 [tests-src]: https://img.shields.io/github/actions/workflow/status/kiwilan/php-notifier/run-tests.yml?branch=main&label=tests&style=flat-square&colorA=18181B
 [tests-href]: https://github.com/kiwilan/php-notifier/actions/workflows/run-tests.yml
-[codecov-src]: https://codecov.io/gh/kiwilan/php-notifier/branch/main/graph/badge.svg?token=1py1fk6vwc
+[codecov-src]: https://codecov.io/gh/kiwilan/php-notifier/branch/main/graph/badge.svg?token=n85p0OoBu0
 [codecov-href]: https://codecov.io/gh/kiwilan/php-notifier
