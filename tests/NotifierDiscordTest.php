@@ -4,7 +4,7 @@ use Kiwilan\Notifier\Notifier;
 
 it('can use clients', function () {
     $notifier = new Notifier();
-    $webhook = dotenv()['NOTIFIER_DISCORD_WEBHOOK'];
+    $webhook = getDotenv('NOTIFIER_DISCORD_WEBHOOK');
 
     $notifier = $notifier->client('stream')
         ->discord($webhook)
@@ -28,7 +28,7 @@ it('can use clients', function () {
 });
 
 it('can use', function () {
-    $webhook = dotenv()['NOTIFIER_DISCORD_WEBHOOK'];
+    $webhook = getDotenv('NOTIFIER_DISCORD_WEBHOOK');
 
     $notifier = new Notifier();
     $notifier = $notifier->discord($webhook)
@@ -49,7 +49,7 @@ it('can use', function () {
 });
 
 it('can use rich embed', function () {
-    $webhook = dotenv()['NOTIFIER_DISCORD_WEBHOOK'];
+    $webhook = getDotenv('NOTIFIER_DISCORD_WEBHOOK');
 
     $notifier = new Notifier();
     $notifier = $notifier->discord($webhook)

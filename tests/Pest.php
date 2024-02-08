@@ -32,6 +32,11 @@ function dotenv(): array
     return $dotenv;
 }
 
+function getDotenv(string $key): string
+{
+    return dotenv()[$key] ?? '';
+}
+
 function getLog(): string
 {
     $os = PHP_OS;

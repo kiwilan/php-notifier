@@ -3,7 +3,7 @@
 use Kiwilan\Notifier\Notifier;
 
 it('can use', function () {
-    $webhook = dotenv()['NOTIFIER_SLACK_WEBHOOK'];
+    $webhook = getDotenv('NOTIFIER_SLACK_WEBHOOK');
     $notifier = new Notifier();
 
     $notifier = $notifier->slack($webhook)
