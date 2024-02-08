@@ -12,7 +12,7 @@
 > [!WARNING]
 > Not ready for production for now.
 
-PHP Notifier is a package to add some useful classes to send notifications. Works for [Discord webhooks](https://support.discord.com/hc/en-us/articles/228383668-Intro-to-Webhooks), [Slack webhooks](https://api.slack.com/messaging/webhooks) and emails with [`symfony/mailer`](https://symfony.com/doc/current/mailer.html).
+PHP Notifier is a package to send notifications for Discord, Slack or mails.
 
 ## Installation
 
@@ -26,9 +26,9 @@ composer require kiwilan/php-notifier
 
 This package offer a support for Discord and Slack webhooks, and emails with `symfony/mailer`.
 
--   Discord: support message and rich embeds webhooks.
--   Slack: support message, attachments and blocks webhooks (without legacy API support).
--   Mail: support message and attachments with `symfony/mailer`.
+-   [Discord](https://support.discord.com/hc/en-us/articles/228383668-Intro-to-Webhooks): support message and rich embeds webhooks.
+-   [Slack](https://api.slack.com/messaging/webhooks): support message, attachments and blocks webhooks (without legacy API support).
+-   Mail: support message and attachments with [`symfony/mailer`](https://symfony.com/doc/current/mailer.html).
 
 HTTP requests use native stream context to send data, `curl` and `guzzle` can be used as option (default is `stream`).
 
