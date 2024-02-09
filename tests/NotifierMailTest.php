@@ -1,7 +1,7 @@
 <?php
 
 use Kiwilan\Notifier\Notifier;
-use Kiwilan\Notifier\Notifier\NotifierMail;
+use Kiwilan\Notifier\NotifierMail;
 
 function createConfig(): NotifierMail
 {

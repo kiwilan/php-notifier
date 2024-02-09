@@ -1,8 +1,7 @@
 <?php
 
-namespace Kiwilan\Notifier\Notifier;
+namespace Kiwilan\Notifier;
 
-use Kiwilan\Notifier\Notifier;
 use Kiwilan\Notifier\Utils\NotifierHelpers;
 use Symfony\Component\Mailer\Mailer;
 use Symfony\Component\Mailer\Transport;

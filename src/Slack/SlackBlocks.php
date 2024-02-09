@@ -1,8 +1,8 @@
 <?php
 
-namespace Kiwilan\Notifier\Notifier\Slack;
+namespace Kiwilan\Notifier\Slack;
 
-use Kiwilan\Notifier\Notifier\NotifierSlack;
+use Kiwilan\Notifier\NotifierSlack;
 use Kiwilan\Notifier\Utils\NotifierHelpers;
 
 class SlackBlocks extends SlackContainer
@@ -39,11 +39,7 @@ class SlackBlocks extends SlackContainer
                         ],
                         [
                             'type' => 'plain_text',
-                            'text' => str_repeat('a', 1997).'...',
-                        ],
-                        [
-                            'type' => 'mrkdwn',
-                            'text' => 'Location: 123 Main Street, New York, NY 10010',
+                            'text' => 'Text!',
                         ],
                     ],
                 ],

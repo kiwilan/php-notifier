@@ -1,9 +1,9 @@
 <?php
 
-namespace Kiwilan\Notifier\Notifier\Slack;
+namespace Kiwilan\Notifier\Slack;
 
 use Illuminate\Support\Facades\Log;
-use Kiwilan\Notifier\Notifier\NotifierSlack;
+use Kiwilan\Notifier\NotifierSlack;
 use Kiwilan\Notifier\Utils\NotifierRequest;
 
 abstract class SlackContainer

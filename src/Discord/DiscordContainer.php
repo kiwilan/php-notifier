@@ -1,9 +1,9 @@
 <?php
 
-namespace Kiwilan\Notifier\Notifier\Discord;
+namespace Kiwilan\Notifier\Discord;
 
 use Illuminate\Support\Facades\Log;
-use Kiwilan\Notifier\Notifier\NotifierDiscord;
+use Kiwilan\Notifier\NotifierDiscord;
 use Kiwilan\Notifier\Utils\NotifierRequest;
 
 abstract class DiscordContainer

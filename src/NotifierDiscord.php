@@ -1,10 +1,9 @@
 <?php
 
-namespace Kiwilan\Notifier\Notifier;
+namespace Kiwilan\Notifier;
 
-use Kiwilan\Notifier\Notifier;
-use Kiwilan\Notifier\Notifier\Discord\DiscordMessage;
-use Kiwilan\Notifier\Notifier\Discord\DiscordRich;
+use Kiwilan\Notifier\Discord\DiscordMessage;
+use Kiwilan\Notifier\Discord\DiscordRich;
 use Kiwilan\Notifier\Utils\NotifierHelpers;
 
 /**

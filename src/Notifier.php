@@ -2,9 +2,6 @@
 
 namespace Kiwilan\Notifier;
 
-use Kiwilan\Notifier\Notifier\NotifierDiscord;
-use Kiwilan\Notifier\Notifier\NotifierMail;
-use Kiwilan\Notifier\Notifier\NotifierSlack;
 use Kiwilan\Notifier\Utils\NotifierHelpers;
 use Kiwilan\Notifier\Utils\NotifierRequest;
 

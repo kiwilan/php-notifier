@@ -1,11 +1,10 @@
 <?php
 
-namespace Kiwilan\Notifier\Notifier;
+namespace Kiwilan\Notifier;
 
-use Kiwilan\Notifier\Notifier;
-use Kiwilan\Notifier\Notifier\Slack\SlackAttachment;
-use Kiwilan\Notifier\Notifier\Slack\SlackBlocks;
-use Kiwilan\Notifier\Notifier\Slack\SlackMessage;
+use Kiwilan\Notifier\Slack\SlackAttachment;
+use Kiwilan\Notifier\Slack\SlackBlocks;
+use Kiwilan\Notifier\Slack\SlackMessage;
 use Kiwilan\Notifier\Utils\NotifierHelpers;
 
 /**

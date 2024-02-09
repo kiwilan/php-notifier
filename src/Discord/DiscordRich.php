@@ -1,9 +1,9 @@
 <?php
 
-namespace Kiwilan\Notifier\Notifier\Discord;
+namespace Kiwilan\Notifier\Discord;
 
 use DateTime;
-use Kiwilan\Notifier\Notifier\NotifierDiscord;
+use Kiwilan\Notifier\NotifierDiscord;
 use Kiwilan\Notifier\Utils\NotifierHelpers;
 
 class DiscordRich extends DiscordContainer
