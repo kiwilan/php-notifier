@@ -14,9 +14,6 @@
 
 PHP Notifier is a package to send notifications for Discord, Slack or mails.
 
-> [!NOTE]
-> For Laravel, you can use [`kiwilan/notifier-laravel`](https://github.com/kiwilan/notifier-laravel) package.
-
 > [!IMPORTANT]
 > This package does not support push notifications or SMS.
 
@@ -27,6 +24,9 @@ You can install the package via composer:
 ```bash
 composer require kiwilan/php-notifier
 ```
+
+> [!NOTE]
+> For Laravel, you can use [`kiwilan/notifier-laravel`](https://github.com/kiwilan/notifier-laravel) package.
 
 ## Usage
 
