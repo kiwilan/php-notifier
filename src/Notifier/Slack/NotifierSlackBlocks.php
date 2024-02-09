@@ -80,6 +80,11 @@ class NotifierSlackBlocks extends NotifierSlackContainer
                 ],
                 [
                     'type' => 'image',
+                    'title' => [
+                        'type' => 'plain_text',
+                        'text' => 'Please enjoy this photo of a kitten',
+                    ],
+                    'block_id' => 'image4',
                     'image_url' => 'https://raw.githubusercontent.com/kiwilan/php-notifier/main/docs/banner.jpg',
                     'alt_text' => 'notifier banner',
                 ],

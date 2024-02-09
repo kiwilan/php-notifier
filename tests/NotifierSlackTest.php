@@ -26,9 +26,9 @@ it('can use', function () {
         ->send();
     expect($notifier->isSuccess())->toBeTrue();
 
-    // $notifier = new Notifier(client: 'curl');
-    // $notifier = $notifier->slack($webhook)
-    //     ->blocks('*Hello, Slack!*')
-    //     ->send();
-    // expect($notifier->isSuccess())->toBeTrue();
+    $notifier = new Notifier(client: 'curl');
+    $notifier = $notifier->slack($webhook)
+        ->blocks('*Hello, Slack!*')
+        ->send();
+    expect($notifier->isSuccess())->toBeTrue();
 });
