@@ -3,9 +3,10 @@
 namespace Kiwilan\Notifier\Notifier\Discord;
 
 use DateTime;
+use Kiwilan\Notifier\Notifier\NotifierDiscord;
 use Kiwilan\Notifier\Utils\NotifierHelpers;
 
-class NotifierDiscordRich extends NotifierDiscordContainer
+class DiscordRich extends DiscordContainer
 {
     protected function __construct(
         protected ?string $description = null,
@@ -26,12 +27,12 @@ class NotifierDiscordRich extends NotifierDiscordContainer
     ) {
     }
 
-    public static function create(string $webhook, string $description): self
+    public static function create(NotifierDiscord $discord, string $message): self
     {
-        $description = NotifierHelpers::truncate($description);
+        $message = NotifierHelpers::truncate($message);
 
-        $self = new self($description);
-        $self->webhook = $webhook;
+        $self = new self($message);
+        $self->discord = $discord;
 
         return $self;
     }
@@ -119,7 +120,7 @@ class NotifierDiscordRich extends NotifierDiscordContainer
      */
     public function colorSuccess(): self
     {
-        $this->color = $this->getShortcutColor('success');
+        $this->color = NotifierHelpers::getShortcutColor('success');
 
         return $this;
     }
@@ -129,7 +130,7 @@ class NotifierDiscordRich extends NotifierDiscordContainer
      */
     public function colorWarning(): self
     {
-        $this->color = $this->getShortcutColor('warning');
+        $this->color = NotifierHelpers::getShortcutColor('warning');
 
         return $this;
     }
@@ -139,19 +140,9 @@ class NotifierDiscordRich extends NotifierDiscordContainer
      */
     public function colorError(): self
     {
-        $this->color = $this->getShortcutColor('error');
+        $this->color = NotifierHelpers::getShortcutColor('error');
 
         return $this;
-    }
-
-    private function getShortcutColor(string $color): string
-    {
-        return match ($color) {
-            'success' => '22c55e',
-            'warning' => 'eab308',
-            'error' => 'ef4444',
-            default => '22c55e',
-        };
     }
 
     /**

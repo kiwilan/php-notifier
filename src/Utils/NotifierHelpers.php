@@ -42,4 +42,14 @@ class NotifierHelpers
             throw new \InvalidArgumentException("Webhook `{$url}` does not contain `{$string}`.");
         }
     }
+
+    public static function getShortcutColor(string $color): string
+    {
+        return match ($color) {
+            'success' => '22c55e',
+            'warning' => 'eab308',
+            'error' => 'ef4444',
+            default => '22c55e',
+        };
+    }
 }

@@ -3,9 +3,9 @@
 namespace Kiwilan\Notifier\Notifier;
 
 use Kiwilan\Notifier\Notifier;
-use Kiwilan\Notifier\Notifier\Slack\NotifierSlackAttachment;
-use Kiwilan\Notifier\Notifier\Slack\NotifierSlackBlocks;
-use Kiwilan\Notifier\Notifier\Slack\NotifierSlackMessage;
+use Kiwilan\Notifier\Notifier\Slack\SlackAttachment;
+use Kiwilan\Notifier\Notifier\Slack\SlackBlocks;
+use Kiwilan\Notifier\Notifier\Slack\SlackMessage;
 use Kiwilan\Notifier\Utils\NotifierHelpers;
 
 /**
@@ -17,7 +17,6 @@ class NotifierSlack extends Notifier
     protected function __construct(
         protected string $webhook,
         protected string $client = 'stream',
-        protected ?string $message = null,
     ) {
     }
 
@@ -29,30 +28,40 @@ class NotifierSlack extends Notifier
     /**
      * @param  string[]|string  $message
      */
-    public function message(array|string $message): NotifierSlackMessage
+    public function message(array|string $message): SlackMessage
     {
         $message = NotifierHelpers::arrayToString($message);
 
-        return NotifierSlackMessage::create($this->webhook, $message, $this->client);
+        return SlackMessage::create($this, $message);
     }
 
     /**
      * @param  string[]|string  $message
      */
-    public function attachment(array|string $message): NotifierSlackAttachment
+    public function attachment(array|string $message): SlackAttachment
     {
         $message = NotifierHelpers::arrayToString($message);
 
-        return NotifierSlackAttachment::create($this->webhook, $message, $this->client);
+        return SlackAttachment::create($this, $message);
     }
 
     /**
      * @param  string[]|string  $message
      */
-    public function blocks(array|string $message): NotifierSlackBlocks
+    public function blocks(array|string $message): SlackBlocks
     {
         $message = NotifierHelpers::arrayToString($message);
 
-        return NotifierSlackBlocks::create($this->webhook, $message, $this->client);
+        return SlackBlocks::create($this, $message);
+    }
+
+    public function getWebhook(): string
+    {
+        return $this->webhook;
+    }
+
+    public function getClient(): string
+    {
+        return $this->client;
     }
 }

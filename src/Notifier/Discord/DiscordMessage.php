@@ -2,9 +2,10 @@
 
 namespace Kiwilan\Notifier\Notifier\Discord;
 
+use Kiwilan\Notifier\Notifier\NotifierDiscord;
 use Kiwilan\Notifier\Utils\NotifierHelpers;
 
-class NotifierDiscordMessage extends NotifierDiscordContainer
+class DiscordMessage extends DiscordContainer
 {
     protected function __construct(
         protected ?string $message = null,
@@ -13,12 +14,12 @@ class NotifierDiscordMessage extends NotifierDiscordContainer
     ) {
     }
 
-    public static function create(string $webhook, string $message): self
+    public static function create(NotifierDiscord $discord, string $message): self
     {
         $message = NotifierHelpers::truncate($message);
 
         $self = new self($message);
-        $self->webhook = $webhook;
+        $self->discord = $discord;
 
         return $self;
     }

@@ -3,8 +3,8 @@
 namespace Kiwilan\Notifier\Notifier;
 
 use Kiwilan\Notifier\Notifier;
-use Kiwilan\Notifier\Notifier\Discord\NotifierDiscordMessage;
-use Kiwilan\Notifier\Notifier\Discord\NotifierDiscordRich;
+use Kiwilan\Notifier\Notifier\Discord\DiscordMessage;
+use Kiwilan\Notifier\Notifier\Discord\DiscordRich;
 use Kiwilan\Notifier\Utils\NotifierHelpers;
 
 /**
@@ -28,20 +28,30 @@ class NotifierDiscord extends Notifier
     /**
      * @param  string[]|string  $message
      */
-    public function message(array|string $message): NotifierDiscordMessage
+    public function message(array|string $message): DiscordMessage
     {
         $message = NotifierHelpers::arrayToString($message);
 
-        return NotifierDiscordMessage::create($this->webhook, $message, $this->client);
+        return DiscordMessage::create($this, $message);
     }
 
     /**
      * @param  string[]|string  $message
      */
-    public function rich(array|string $message): NotifierDiscordRich
+    public function rich(array|string $message): DiscordRich
     {
         $message = NotifierHelpers::arrayToString($message);
 
-        return NotifierDiscordRich::create($this->webhook, $message, $this->client);
+        return DiscordRich::create($this, $message);
+    }
+
+    public function getWebhook(): string
+    {
+        return $this->webhook;
+    }
+
+    public function getClient(): string
+    {
+        return $this->client;
     }
 }

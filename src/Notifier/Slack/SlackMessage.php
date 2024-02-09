@@ -2,21 +2,22 @@
 
 namespace Kiwilan\Notifier\Notifier\Slack;
 
+use Kiwilan\Notifier\Notifier\NotifierSlack;
 use Kiwilan\Notifier\Utils\NotifierHelpers;
 
-class NotifierSlackMessage extends NotifierSlackContainer
+class SlackMessage extends SlackContainer
 {
     protected function __construct(
         protected ?string $text = null,
     ) {
     }
 
-    public static function create(string $webhook, string $message): self
+    public static function create(NotifierSlack $slack, string $message): self
     {
         $message = NotifierHelpers::truncate($message);
 
         $self = new self($message);
-        $self->webhook = $webhook;
+        $self->slack = $slack;
 
         return $self;
     }

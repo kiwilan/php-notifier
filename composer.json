@@ -23,8 +23,9 @@
     },
     "require-dev": {
         "guzzlehttp/guzzle": "^7.8",
-        "pestphp/pest": "^2.15",
         "laravel/pint": "^1.0",
+        "pestphp/pest": "^2.15",
+        "phpstan/phpstan": "^1.10",
         "spatie/ray": "^1.28"
     },
     "autoload": {
@@ -41,6 +42,7 @@
         "test": "vendor/bin/pest",
         "test-filter": "vendor/bin/pest --filter",
         "test-coverage": "vendor/bin/pest --coverage",
+        "analyse": "vendor/bin/phpstan analyse",
         "format": "vendor/bin/pint"
     },
     "config": {
