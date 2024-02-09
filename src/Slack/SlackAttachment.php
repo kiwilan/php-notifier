@@ -152,8 +152,12 @@ class SlackAttachment extends SlackContainer
         return $this;
     }
 
-    public function timestamp(DateTime $timestamp): self
+    public function timestamp(?DateTime $timestamp = null): self
     {
+        if (! $timestamp) {
+            $timestamp = new DateTime();
+        }
+
         $this->ts = $timestamp->getTimestamp();
 
         return $this;

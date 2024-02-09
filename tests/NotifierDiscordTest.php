@@ -6,25 +6,23 @@ it('can use clients', function () {
     $notifier = new Notifier();
     $webhook = getDotenv('NOTIFIER_DISCORD_WEBHOOK');
 
-    $notifier = $notifier->client('stream')
+    $stream = $notifier->client('stream')
         ->discord($webhook)
         ->message('Hello, Discord!')
         ->send();
-    expect($notifier->isSuccess())->toBeTrue();
+    expect($stream->isSuccess())->toBeTrue();
 
-    $notifier = new Notifier();
-    $notifier = $notifier->client('curl')
+    $curl = $notifier->client('curl')
         ->discord($webhook)
         ->message('Hello, Discord!')
         ->send();
-    expect($notifier->isSuccess())->toBeTrue();
+    expect($curl->isSuccess())->toBeTrue();
 
-    $notifier = new Notifier();
-    $notifier = $notifier->client('guzzle')
+    $guzzle = $notifier->client('guzzle')
         ->discord($webhook)
         ->message('Hello, Discord!')
         ->send();
-    expect($notifier->isSuccess())->toBeTrue();
+    expect($guzzle->isSuccess())->toBeTrue();
 });
 
 it('can use', function () {
