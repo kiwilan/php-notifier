@@ -2,7 +2,7 @@
 
 namespace Kiwilan\Notifier;
 
-use Kiwilan\Notifier\Utils\NotifierRequest;
+use Kiwilan\Notifier\Utils\NotifierHttpClient;
 use Kiwilan\Notifier\Utils\NotifierShared;
 
 /**
@@ -13,7 +13,7 @@ class Notifier
     public function __construct(
         protected string $type = 'unknown',
         protected array $requestData = [],
-        protected ?NotifierRequest $request = null,
+        protected ?NotifierHttpClient $request = null,
         protected string $client = 'stream',
     ) {
     }
@@ -65,6 +65,22 @@ class Notifier
         $this->setClientIfNotStream($client);
 
         return NotifierDiscord::make($webhook, $this->client);
+    }
+
+    /**
+     * Send notification to any URL.
+     *
+     * @param  string  $url  Any URL, like `https://example.com`
+     */
+    public function http(string $url, string $client = 'stream'): NotifierHttp
+    {
+        $self = new self();
+        $self->type = 'request';
+
+        NotifierShared::checkIfStringIsUrl($url);
+        $this->setClientIfNotStream($client);
+
+        return NotifierHttp::make($url, $this->client);
     }
 
     /**

@@ -3,13 +3,13 @@
 namespace Kiwilan\Notifier\Slack;
 
 use Kiwilan\Notifier\NotifierSlack;
-use Kiwilan\Notifier\Utils\NotifierRequest;
+use Kiwilan\Notifier\Utils\NotifierHttpClient;
 
 abstract class SlackContainer
 {
     protected function __construct(
         protected NotifierSlack $slack,
-        protected ?NotifierRequest $request = null,
+        protected ?NotifierHttpClient $request = null,
         protected bool $isSuccess = false,
     ) {
     }
@@ -25,7 +25,7 @@ abstract class SlackContainer
 
     public function send(bool $mock = false): static
     {
-        $this->request = NotifierRequest::make($this->slack->getWebhook())
+        $this->request = NotifierHttpClient::make($this->slack->getWebhook())
             ->client($this->slack->getClient())
             ->body($this->toArray())
             ->send($mock);

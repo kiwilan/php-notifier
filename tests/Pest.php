@@ -13,7 +13,8 @@ function dotenv(): array
             if ($key === " \n ") {
                 continue;
             }
-            $value = $data[1] ?? null;
+            unset($data[0]);
+            $value = implode('=', $data);
 
             $key = $key ? trim($key) : '';
             $value = $value ? trim($value) : '';

@@ -2,10 +2,10 @@
 
 namespace Kiwilan\Notifier\Utils;
 
-class NotifierRequest
+class NotifierHttpClient
 {
     /**
-     * Create a new NotifierRequest instance.
+     * Create a new NotifierHttpClient instance.
      *
      * @param  string  $url  The URL to send the request to
      * @param  string  $mode  The request mode: `stream`, `curl`, or `guzzle`
@@ -32,7 +32,7 @@ class NotifierRequest
     }
 
     /**
-     * Create a new NotifierRequest instance.
+     * Create a new NotifierHttpClient instance.
      */
     public static function make(?string $url)
     {

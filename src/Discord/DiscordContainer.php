@@ -3,13 +3,13 @@
 namespace Kiwilan\Notifier\Discord;
 
 use Kiwilan\Notifier\NotifierDiscord;
-use Kiwilan\Notifier\Utils\NotifierRequest;
+use Kiwilan\Notifier\Utils\NotifierHttpClient;
 
 abstract class DiscordContainer
 {
     protected function __construct(
         protected NotifierDiscord $discord,
-        protected ?NotifierRequest $request = null,
+        protected ?NotifierHttpClient $request = null,
         protected bool $isSuccess = false,
     ) {
     }
@@ -23,7 +23,7 @@ abstract class DiscordContainer
         return $this->discord;
     }
 
-    public function getRequest(): ?NotifierRequest
+    public function getRequest(): ?NotifierHttpClient
     {
         return $this->request;
     }
@@ -35,7 +35,7 @@ abstract class DiscordContainer
 
     public function send(bool $mock = false): static
     {
-        $this->request = NotifierRequest::make($this->discord->getWebhook())
+        $this->request = NotifierHttpClient::make($this->discord->getWebhook())
             ->client($this->discord->getClient())
             ->body($this->toArray())
             ->send($mock);
