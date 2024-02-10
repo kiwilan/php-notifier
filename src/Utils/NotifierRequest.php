@@ -136,6 +136,7 @@ class NotifierRequest
      */
     public function send(bool $mock = false): self
     {
+        $this->mock = $mock;
         if (! $mock) {
             dump('sending request');
         } else {
