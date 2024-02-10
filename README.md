@@ -9,9 +9,6 @@
 [![tests][tests-src]][tests-href]
 [![codecov][codecov-src]][codecov-href]
 
-> [!WARNING]
-> Not ready for production for now.
-
 PHP Notifier is a package to send mails or notifications for Discord or Slack.
 
 > [!IMPORTANT]
