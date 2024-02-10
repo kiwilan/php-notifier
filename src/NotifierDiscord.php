@@ -4,7 +4,7 @@ namespace Kiwilan\Notifier;
 
 use Kiwilan\Notifier\Discord\DiscordMessage;
 use Kiwilan\Notifier\Discord\DiscordRich;
-use Kiwilan\Notifier\Utils\NotifierHelpers;
+use Kiwilan\Notifier\Utils\NotifierShared;
 
 /**
  * @see https://gist.github.com/Birdie0/78ee79402a4301b1faf412ab5f1cdcf9
@@ -29,7 +29,7 @@ class NotifierDiscord extends Notifier
      */
     public function message(array|string $message): DiscordMessage
     {
-        $message = NotifierHelpers::arrayToString($message);
+        $message = NotifierShared::arrayToString($message);
 
         return DiscordMessage::create($this, $message);
     }
@@ -39,7 +39,7 @@ class NotifierDiscord extends Notifier
      */
     public function rich(array|string $message): DiscordRich
     {
-        $message = NotifierHelpers::arrayToString($message);
+        $message = NotifierShared::arrayToString($message);
 
         return DiscordRich::create($this, $message);
     }

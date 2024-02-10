@@ -3,7 +3,7 @@
 namespace Kiwilan\Notifier\Discord;
 
 use Kiwilan\Notifier\NotifierDiscord;
-use Kiwilan\Notifier\Utils\NotifierHelpers;
+use Kiwilan\Notifier\Utils\NotifierShared;
 
 class DiscordMessage extends DiscordContainer
 {
@@ -16,7 +16,7 @@ class DiscordMessage extends DiscordContainer
 
     public static function create(NotifierDiscord $discord, string $message): self
     {
-        $message = NotifierHelpers::truncate($message);
+        $message = NotifierShared::truncate($message);
 
         $self = new self($message);
         $self->discord = $discord;

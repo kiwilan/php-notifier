@@ -2,7 +2,7 @@
 
 namespace Kiwilan\Notifier;
 
-use Kiwilan\Notifier\Utils\NotifierHelpers;
+use Kiwilan\Notifier\Utils\NotifierShared;
 use Symfony\Component\Mailer\Mailer;
 use Symfony\Component\Mailer\Transport;
 use Symfony\Component\Mailer\Transport\TransportInterface;
@@ -126,7 +126,7 @@ class NotifierMail extends Notifier
 
     public function message(array|string $message): self
     {
-        $this->message = NotifierHelpers::arrayToString($message);
+        $this->message = NotifierShared::arrayToString($message);
 
         return $this;
     }
@@ -136,7 +136,7 @@ class NotifierMail extends Notifier
      */
     public function html(array|string $html): self
     {
-        $this->html = NotifierHelpers::arrayToString($html);
+        $this->html = NotifierShared::arrayToString($html);
 
         return $this;
     }

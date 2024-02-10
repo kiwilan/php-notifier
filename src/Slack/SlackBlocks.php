@@ -3,7 +3,7 @@
 namespace Kiwilan\Notifier\Slack;
 
 use Kiwilan\Notifier\NotifierSlack;
-use Kiwilan\Notifier\Utils\NotifierHelpers;
+use Kiwilan\Notifier\Utils\NotifierShared;
 
 class SlackBlocks extends SlackContainer
 {
@@ -14,7 +14,7 @@ class SlackBlocks extends SlackContainer
 
     public static function create(NotifierSlack $slack, string $message): self
     {
-        $message = NotifierHelpers::truncate($message);
+        $message = NotifierShared::truncate($message);
 
         $self = new self($message);
         $self->slack = $slack;

@@ -2,8 +2,8 @@
 
 namespace Kiwilan\Notifier;
 
-use Kiwilan\Notifier\Utils\NotifierHelpers;
 use Kiwilan\Notifier\Utils\NotifierRequest;
+use Kiwilan\Notifier\Utils\NotifierShared;
 
 /**
  * Send notifications to email, Slack or Discord.
@@ -41,8 +41,8 @@ class Notifier
         $self = new self();
         $self->type = 'slack';
 
-        NotifierHelpers::checkIfStringIsUrl($webhook);
-        NotifierHelpers::checkIfUrlContains($webhook, 'slack.com');
+        NotifierShared::checkIfStringIsUrl($webhook);
+        NotifierShared::checkIfUrlContains($webhook, 'slack.com');
         $this->setClientIfNotStream($client);
 
         return NotifierSlack::make($webhook, $this->client);
@@ -60,8 +60,8 @@ class Notifier
         $self = new self();
         $self->type = 'discord';
 
-        NotifierHelpers::checkIfStringIsUrl($webhook);
-        NotifierHelpers::checkIfUrlContains($webhook, 'discord.com');
+        NotifierShared::checkIfStringIsUrl($webhook);
+        NotifierShared::checkIfUrlContains($webhook, 'discord.com');
         $this->setClientIfNotStream($client);
 
         return NotifierDiscord::make($webhook, $this->client);

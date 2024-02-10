@@ -2,7 +2,7 @@
 
 namespace Kiwilan\Notifier\Utils;
 
-class NotifierHelpers
+class NotifierShared
 {
     public static function truncate(?string $string, int $length = 2000): ?string
     {
@@ -10,7 +10,7 @@ class NotifierHelpers
             return null;
         }
 
-        if (strlen($string) > $length) {
+        if (strlen($string) >= $length) {
             $string = substr($string, 0, $length - 20).'...';
         }
 

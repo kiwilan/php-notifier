@@ -4,7 +4,7 @@ namespace Kiwilan\Notifier\Slack;
 
 use DateTime;
 use Kiwilan\Notifier\NotifierSlack;
-use Kiwilan\Notifier\Utils\NotifierHelpers;
+use Kiwilan\Notifier\Utils\NotifierShared;
 
 class SlackAttachment extends SlackContainer
 {
@@ -28,7 +28,7 @@ class SlackAttachment extends SlackContainer
 
     public static function create(NotifierSlack $slack, string $message): self
     {
-        $message = NotifierHelpers::truncate($message);
+        $message = NotifierShared::truncate($message);
 
         $self = new self($message);
         $self->slack = $slack;
@@ -41,7 +41,7 @@ class SlackAttachment extends SlackContainer
      */
     public function colorSuccess(): self
     {
-        $this->color = '#'.NotifierHelpers::getShortcutColor('success');
+        $this->color = '#'.NotifierShared::getShortcutColor('success');
 
         return $this;
     }
@@ -51,7 +51,7 @@ class SlackAttachment extends SlackContainer
      */
     public function colorWarning(): self
     {
-        $this->color = '#'.NotifierHelpers::getShortcutColor('warning');
+        $this->color = '#'.NotifierShared::getShortcutColor('warning');
 
         return $this;
     }
@@ -61,7 +61,7 @@ class SlackAttachment extends SlackContainer
      */
     public function colorError(): self
     {
-        $this->color = '#'.NotifierHelpers::getShortcutColor('error');
+        $this->color = '#'.NotifierShared::getShortcutColor('error');
 
         return $this;
     }

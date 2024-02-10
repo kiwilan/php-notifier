@@ -5,7 +5,7 @@ namespace Kiwilan\Notifier;
 use Kiwilan\Notifier\Slack\SlackAttachment;
 use Kiwilan\Notifier\Slack\SlackBlocks;
 use Kiwilan\Notifier\Slack\SlackMessage;
-use Kiwilan\Notifier\Utils\NotifierHelpers;
+use Kiwilan\Notifier\Utils\NotifierShared;
 
 /**
  * @see https://api.slack.com/messaging/webhooks#advanced_message_formatting
@@ -29,7 +29,7 @@ class NotifierSlack extends Notifier
      */
     public function message(array|string $message): SlackMessage
     {
-        $message = NotifierHelpers::arrayToString($message);
+        $message = NotifierShared::arrayToString($message);
 
         return SlackMessage::create($this, $message);
     }
@@ -39,7 +39,7 @@ class NotifierSlack extends Notifier
      */
     public function attachment(array|string $message): SlackAttachment
     {
-        $message = NotifierHelpers::arrayToString($message);
+        $message = NotifierShared::arrayToString($message);
 
         return SlackAttachment::create($this, $message);
     }
@@ -49,7 +49,7 @@ class NotifierSlack extends Notifier
      */
     public function blocks(array|string $message): SlackBlocks
     {
-        $message = NotifierHelpers::arrayToString($message);
+        $message = NotifierShared::arrayToString($message);
 
         return SlackBlocks::create($this, $message);
     }
