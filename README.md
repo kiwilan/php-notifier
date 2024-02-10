@@ -15,7 +15,7 @@
 PHP Notifier is a package to send mails or notifications for Discord or Slack.
 
 > [!IMPORTANT]
-> This package does not support push notifications or SMS.
+> This package does not support push notifications or SMS (if you interested, a PR is welcome).
 
 ## Installation
 
