@@ -12,7 +12,7 @@
 > [!WARNING]
 > Not ready for production for now.
 
-PHP Notifier is a package to send notifications for Discord, Slack or mails.
+PHP Notifier is a package to send mails or notifications for Discord or Slack.
 
 > [!IMPORTANT]
 > This package does not support push notifications or SMS.

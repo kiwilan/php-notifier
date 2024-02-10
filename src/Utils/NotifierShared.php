@@ -18,10 +18,14 @@ class NotifierShared
     }
 
     /**
-     * @param  string|string[]  $message
+     * @param  string|string[]|null  $message
      */
-    public static function arrayToString(array|string $message): string
+    public static function arrayToString(array|string $message): ?string
     {
+        if (! $message) {
+            return null;
+        }
+
         if (is_string($message)) {
             return $message;
         }
