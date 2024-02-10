@@ -1,6 +1,6 @@
 # **PHP Notifier**
 
-![Banner with british letter box picture in background and Notifier for Laravel title](https://raw.githubusercontent.com/kiwilan/php-notifier/main/docs/banner.jpg)
+![Banner with british letter box picture in background and Notifier title](https://raw.githubusercontent.com/kiwilan/php-notifier/main/docs/banner.jpg)
 
 [![php][php-version-src]][php-version-href]
 [![version][version-src]][version-href]
