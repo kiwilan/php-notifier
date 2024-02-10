@@ -68,7 +68,7 @@ class Notifier
     }
 
     /**
-     * Send notification to any URL.
+     * Send notification to any URL, you can specify HTTP method, headers and body.
      *
      * @param  string  $url  Any URL, like `https://example.com`
      */

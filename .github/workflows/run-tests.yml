@@ -66,6 +66,7 @@ jobs:
           echo NOTIFIER_MAIL_ENCRYPTION=${{ secrets.NOTIFIER_MAIL_ENCRYPTION }} >> .env
           echo NOTIFIER_MAIL_FROM_ADDRESS=${{ secrets.NOTIFIER_MAIL_FROM_ADDRESS }} >> .env
           echo NOTIFIER_MAIL_TO_ADDRESS=${{ secrets.NOTIFIER_MAIL_TO_ADDRESS }} >> .env
+          echo NOTIFIER_REQUEST=${{ secrets.NOTIFIER_REQUEST }} >> .env
           echo NOTIFIER_MOCK=true >> .env
 
       - name: Execute tests
