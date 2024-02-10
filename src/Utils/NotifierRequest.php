@@ -149,6 +149,8 @@ class NotifierRequest
                 $this->curl($mock);
             } elseif ($this->mode === 'guzzle') {
                 $this->guzzle($mock);
+            } else {
+                throw new \Exception('Invalid request mode.');
             }
         } catch (\Throwable $th) {
             $this->status_code = 500;
@@ -202,6 +204,7 @@ class NotifierRequest
         $this->response_headers = $headers;
         $this->status_code = (int) explode(' ', $headers[0])[1];
         $this->response_body = json_decode($response, true);
+        dump($this->status_code);
     }
 
     /**
