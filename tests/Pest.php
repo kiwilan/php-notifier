@@ -50,11 +50,9 @@ function getLog(): string
         default => 'php --info | grep error',
     };
 
-    // dump($cmd);
     $output = exec($cmd);
     $log_path_regex = '/error_log => (.*)/';
     preg_match($log_path_regex, $output, $matches);
-    // dump($output);
 
     return $matches[1];
 }

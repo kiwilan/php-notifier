@@ -137,11 +137,6 @@ class NotifierRequest
     public function send(bool $mock = false): self
     {
         $this->mock = $mock;
-        if (! $mock) {
-            dump('sending request');
-        } else {
-            dump('sending mock request');
-        }
 
         try {
             if ($this->mode === 'stream') {
@@ -205,7 +200,6 @@ class NotifierRequest
         $this->response_headers = $headers;
         $this->status_code = (int) explode(' ', $headers[0])[1];
         $this->response_body = json_decode($response, true);
-        dump($this->status_code);
     }
 
     /**
