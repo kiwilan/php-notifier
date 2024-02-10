@@ -136,6 +136,12 @@ class NotifierRequest
      */
     public function send(bool $mock = false): self
     {
+        if (! $mock) {
+            dump('sending request');
+        } else {
+            dump('sending mock request');
+        }
+
         try {
             if ($this->mode === 'stream') {
                 $this->stream($mock);
