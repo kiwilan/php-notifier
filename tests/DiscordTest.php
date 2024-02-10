@@ -9,33 +9,33 @@ it('can use clients', function () {
     $stream = $notifier->client('stream')
         ->discord($webhook)
         ->message('Hello, Discord!')
-        ->send();
+        ->send(mock());
     expect($stream->isSuccess())->toBeTrue();
     expect($stream->getRequest()->getMode())->toBe('stream');
 
     $curl = $notifier->client('curl')
         ->discord($webhook)
         ->message('Hello, Discord!')
-        ->send();
+        ->send(mock());
     expect($curl->isSuccess())->toBeTrue();
     expect($curl->getRequest()->getMode())->toBe('curl');
 
     $guzzle = $notifier->client('guzzle')
         ->discord($webhook)
         ->message('Hello, Discord!')
-        ->send();
+        ->send(mock());
     expect($guzzle->isSuccess())->toBeTrue();
     expect($guzzle->getRequest()->getMode())->toBe('guzzle');
 
     $curl = $notifier->discord($webhook, 'curl')
         ->message('Hello, Discord!')
-        ->send();
+        ->send(mock());
     expect($curl->isSuccess())->toBeTrue();
     expect($curl->getRequest()->getMode())->toBe('curl');
 
     $unknown = $notifier->discord($webhook, 'unknown')
         ->message('Hello, Discord!')
-        ->send();
+        ->send(mock());
     expect($unknown->isSuccess())->toBeTrue();
     expect($unknown->getRequest()->getMode())->toBe('stream');
 });
@@ -47,7 +47,7 @@ it('can use', function () {
     $notifier = $notifier->discord($webhook)
         ->message('Hello, Discord!')
         ->user('Notifier', 'https://raw.githubusercontent.com/kiwilan/php-notifier/main/docs/banner.jpg')
-        ->send();
+        ->send(mock());
     expect($notifier->isSuccess())->toBeTrue();
 
     $notifier = new Notifier();
@@ -57,7 +57,7 @@ it('can use', function () {
             'This is a message.',
         ])
         ->user('Notifier', 'https://raw.githubusercontent.com/kiwilan/php-notifier/main/docs/banner.jpg')
-        ->send();
+        ->send(mock());
     expect($notifier->isSuccess())->toBeTrue();
 });
 
@@ -72,7 +72,7 @@ it('can use rich embed', function () {
             'for',
             'Discord',
         ])
-        ->send();
+        ->send(mock());
     expect($notifier->isSuccess())->toBeTrue();
 
     $notifier = new Notifier();
@@ -91,7 +91,7 @@ it('can use rich embed', function () {
         ->thumbnail('https://raw.githubusercontent.com/kiwilan/php-notifier/main/docs/banner.jpg')
         ->image('https://raw.githubusercontent.com/kiwilan/php-notifier/main/docs/banner.jpg')
         ->footer('Footer', 'https://raw.githubusercontent.com/kiwilan/php-notifier/main/docs/banner.jpg')
-        ->send();
+        ->send(mock());
     expect($notifier->isSuccess())->toBeTrue();
 
     $toArray = $notifier->toArray();

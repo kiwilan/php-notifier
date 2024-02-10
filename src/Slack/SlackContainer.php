@@ -23,12 +23,12 @@ abstract class SlackContainer
         return $this->isSuccess;
     }
 
-    public function send(): static
+    public function send(bool $mock = false): static
     {
         $this->request = NotifierRequest::make($this->slack->getWebhook())
             ->client($this->slack->getClient())
             ->body($this->toArray())
-            ->send();
+            ->send($mock);
 
         $this->isSuccess = $this->request->getStatusCode() === 200;
 

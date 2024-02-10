@@ -162,7 +162,7 @@ class NotifierMail extends Notifier
         return $this->isSuccess;
     }
 
-    public function send(): self
+    public function send(bool $mock = false): self
     {
         $this->mailer_transport = Transport::fromDsn("{$this->mailer}://{$this->host}:{$this->port}");
         $this->mailer_instance = new Mailer($this->mailer_transport);
@@ -206,6 +206,12 @@ class NotifierMail extends Notifier
             foreach ($this->attachments as $attachment) {
                 $this->mailer_email->attachFromPath($attachment['path'], $attachment['name']);
             }
+        }
+
+        if ($mock) {
+            $this->isSuccess = true;
+
+            return $this;
         }
 
         try {

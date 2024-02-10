@@ -37,6 +37,11 @@ function getDotenv(string $key): string
     return dotenv()[$key] ?? '';
 }
 
+function mock(): bool
+{
+    return (bool) dotenv()['NOTIFIER_MOCK'] ?? false;
+}
+
 function getLog(): string
 {
     $os = PHP_OS;

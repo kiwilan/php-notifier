@@ -27,6 +27,7 @@ class NotifierRequest
         protected ?array $response_body = [],
         protected ?int $status_code = null,
         protected bool $json = true,
+        protected bool $mock = false,
     ) {
     }
 
@@ -133,15 +134,15 @@ class NotifierRequest
     /**
      * Send HTTP request.
      */
-    public function send(): self
+    public function send(bool $mock = false): self
     {
         try {
             if ($this->mode === 'stream') {
-                $this->stream();
+                $this->stream($mock);
             } elseif ($this->mode === 'curl') {
-                $this->curl();
+                $this->curl($mock);
             } elseif ($this->mode === 'guzzle') {
-                $this->guzzle();
+                $this->guzzle($mock);
             }
         } catch (\Throwable $th) {
             $this->status_code = 500;
@@ -151,6 +152,17 @@ class NotifierRequest
         }
 
         return $this;
+    }
+
+    private function mockedResponse(): void
+    {
+        if ($this->mock) {
+            $this->response_headers = [];
+            $this->status_code = 200;
+            $this->response_body = [
+                'message' => 'Mocked response',
+            ];
+        }
     }
 
     /**
@@ -172,6 +184,12 @@ class NotifierRequest
                 'content' => $this->json ? json_encode($this->request_body) : http_build_query($this->request_body),
             ],
         ]);
+
+        $this->mockedResponse();
+        if ($this->mock) {
+            return;
+        }
+
         $response = file_get_contents($this->url, false, $context);
         $headers = $http_response_header;
 
@@ -208,6 +226,11 @@ class NotifierRequest
         curl_setopt($ch, CURLOPT_HEADER, 0);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
+        $this->mockedResponse();
+        if ($this->mock) {
+            return;
+        }
+
         $response = curl_exec($ch);
 
         $this->response_headers = curl_getinfo($ch);
@@ -228,6 +251,12 @@ class NotifierRequest
 
         $client = new \GuzzleHttp\Client();
         $body = $this->json ? 'json' : 'form_params';
+
+        $this->mockedResponse();
+        if ($this->mock) {
+            return;
+        }
+
         $response = $client->request($this->request_method, $this->url, [
             $body => $this->request_body,
         ]);
@@ -317,6 +346,7 @@ class NotifierRequest
             'response_body' => $this->response_body,
             'status_code' => $this->status_code,
             'json' => $this->json,
+            'mock' => $this->mock,
         ];
     }
 }

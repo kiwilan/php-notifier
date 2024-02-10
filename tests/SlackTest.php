@@ -8,7 +8,7 @@ it('can use', function () {
 
     $notifier = $notifier->slack($webhook)
         ->message('Hello, Slack!')
-        ->send();
+        ->send(mock());
     expect($notifier->isSuccess())->toBeTrue();
 
     $notifier = new Notifier();
@@ -17,19 +17,19 @@ it('can use', function () {
             'Hello',
             'Slack!',
         ])
-        ->send();
+        ->send(mock());
     expect($notifier->isSuccess())->toBeTrue();
 
     $notifier = new Notifier();
     $notifier = $notifier->slack($webhook)
         ->attachment('*Hello, Slack!*')
-        ->send();
+        ->send(mock());
     expect($notifier->isSuccess())->toBeTrue();
 
     $notifier = new Notifier();
     $notifier = $notifier->slack($webhook)
         ->blocks('*Hello, Slack!*')
-        ->send();
+        ->send(mock());
     expect($notifier->isSuccess())->toBeTrue();
 });
 
@@ -59,6 +59,6 @@ it('can use attachment', function () {
         ->imageUrl('http://my-website.com/path/to/image.jpg')
         ->footer('Slack API', 'https://raw.githubusercontent.com/kiwilan/php-notifier/main/docs/banner.jpg')
         ->timestamp(new DateTime())
-        ->send();
+        ->send(mock());
     expect($notifier->isSuccess())->toBeTrue();
 });

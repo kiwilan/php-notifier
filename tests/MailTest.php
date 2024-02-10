@@ -24,7 +24,7 @@ it('can use', function () {
         ->message('Hello, Mail!')
         ->from($dotenv['NOTIFIER_MAIL_FROM_ADDRESS'], 'Kiwilan')
         ->to($dotenv['NOTIFIER_MAIL_TO_ADDRESS'], 'Kiwilan')
-        ->send();
+        ->send(mock());
 
     expect($notifier->isSuccess())->toBeTrue();
 });
@@ -38,7 +38,7 @@ it('can use attachment', function () {
         ->from($dotenv['NOTIFIER_MAIL_FROM_ADDRESS'], 'Kiwilan')
         ->to($dotenv['NOTIFIER_MAIL_TO_ADDRESS'], 'Kiwilan')
         ->addAttachment(__DIR__.'/media/text.md', 'text.md')
-        ->send();
+        ->send(mock());
 
     expect($notifier->isSuccess())->toBeTrue();
 });

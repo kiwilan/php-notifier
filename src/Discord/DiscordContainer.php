@@ -33,14 +33,14 @@ abstract class DiscordContainer
         return $this->isSuccess;
     }
 
-    public function send(): static
+    public function send(bool $mock = false): static
     {
         $this->request = NotifierRequest::make($this->discord->getWebhook())
             ->client($this->discord->getClient())
             ->body($this->toArray())
-            ->send();
+            ->send($mock);
 
-        $this->isSuccess = $this->request->getStatusCode() === 204;
+        $this->isSuccess = $this->request->getStatusCode() === 204 || $this->request->getStatusCode() === 200;
 
         if ($this->isSuccess) {
             // Log::error("Notifier: discord notification failed with HTTP {$this->request->getStatusCode()}", [
