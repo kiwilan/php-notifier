@@ -11,18 +11,33 @@ it('can use clients', function () {
         ->message('Hello, Discord!')
         ->send();
     expect($stream->isSuccess())->toBeTrue();
+    expect($stream->getRequest()->getMode())->toBe('stream');
 
     $curl = $notifier->client('curl')
         ->discord($webhook)
         ->message('Hello, Discord!')
         ->send();
     expect($curl->isSuccess())->toBeTrue();
+    expect($curl->getRequest()->getMode())->toBe('curl');
 
     $guzzle = $notifier->client('guzzle')
         ->discord($webhook)
         ->message('Hello, Discord!')
         ->send();
     expect($guzzle->isSuccess())->toBeTrue();
+    expect($guzzle->getRequest()->getMode())->toBe('guzzle');
+
+    $curl = $notifier->discord($webhook, 'curl')
+        ->message('Hello, Discord!')
+        ->send();
+    expect($curl->isSuccess())->toBeTrue();
+    expect($curl->getRequest()->getMode())->toBe('curl');
+
+    $unknown = $notifier->discord($webhook, 'unknown')
+        ->message('Hello, Discord!')
+        ->send();
+    expect($unknown->isSuccess())->toBeTrue();
+    expect($unknown->getRequest()->getMode())->toBe('stream');
 });
 
 it('can use', function () {

@@ -103,7 +103,7 @@ $mailConfig->from('hello@example.com', 'Hello')
 ```
 
 > [!NOTE]
-> If `html` is not set, `message` will be used as HTML content.
+> If `html` is not set, `message` will be used as HTML content. And if `html` is set but not `message`, `html` will be used as plain text content with `strip_tags` method.
 
 Multiple recipients can be added with `to` method.
 

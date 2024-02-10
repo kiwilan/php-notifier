@@ -2,7 +2,6 @@
 
 namespace Kiwilan\Notifier\Slack;
 
-use Illuminate\Support\Facades\Log;
 use Kiwilan\Notifier\NotifierSlack;
 use Kiwilan\Notifier\Utils\NotifierRequest;
 
@@ -27,7 +26,8 @@ abstract class SlackContainer
     public function send(): static
     {
         $this->request = NotifierRequest::make($this->slack->getWebhook())
-            ->requestData($this->toArray())
+            ->client($this->slack->getClient())
+            ->body($this->toArray())
             ->send();
 
         $this->isSuccess = $this->request->getStatusCode() === 200;

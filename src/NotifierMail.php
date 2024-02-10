@@ -21,9 +21,9 @@ class NotifierMail extends Notifier
         protected ?string $encryption = null,
         protected ?string $username = null,
         protected ?string $password = null,
-        protected ?TransportInterface $mailTransport = null,
-        protected ?Email $mailEmail = null,
-        protected ?Mailer $mailMailer = null,
+        protected ?TransportInterface $mailer_transport = null,
+        protected ?Email $mailer_email = null,
+        protected ?Mailer $mailer_instance = null,
         protected array $to = [],
         protected ?Address $from = null,
         protected ?Address $replyTo = null,
@@ -164,43 +164,52 @@ class NotifierMail extends Notifier
 
     public function send(): self
     {
-        $this->mailTransport = Transport::fromDsn("{$this->mailer}://{$this->host}:{$this->port}");
-        $this->mailMailer = new Mailer($this->mailTransport);
+        $this->mailer_transport = Transport::fromDsn("{$this->mailer}://{$this->host}:{$this->port}");
+        $this->mailer_instance = new Mailer($this->mailer_transport);
 
         // $this->logSending("{$this->mailer}://{$this->host}:{$this->port}");
 
-        $this->mailEmail = (new Email())
+        $this->mailer_email = (new Email())
             ->to(...$this->to)
             ->from($this->from);
 
         if ($this->replyTo) {
-            $this->mailEmail->replyTo($this->replyTo);
+            $this->mailer_email->replyTo($this->replyTo);
         }
 
         if ($this->subject) {
-            $this->mailEmail->subject($this->subject);
+            $this->mailer_email->subject($this->subject);
         }
 
         if ($this->message) {
-            $this->mailEmail->text($this->message);
+            $this->mailer_email->text($this->message);
         }
 
         if ($this->html) {
-            $this->mailEmail->html($this->html);
+            $this->mailer_email->html($this->html);
         }
 
         if (! $this->html) {
-            $this->mailEmail->html($this->message);
+            $this->mailer_email->html($this->message);
+        }
+
+        if (! $this->message && $this->html) {
+            $this->mailer_email->text(strip_tags($this->html));
+        }
+
+        if (! $this->message && ! $this->html) {
+            $this->mailer_email->text('');
+            $this->mailer_email->html('');
         }
 
         if (count($this->attachments) > 0) {
             foreach ($this->attachments as $attachment) {
-                $this->mailEmail->attachFromPath($attachment['path'], $attachment['name']);
+                $this->mailer_email->attachFromPath($attachment['path'], $attachment['name']);
             }
         }
 
         try {
-            $this->mailMailer->send($this->mailEmail);
+            $this->mailer_instance->send($this->mailer_email);
         } catch (\Throwable $th) {
             // $this->logError($th->getMessage(), $this->toArray());
 
@@ -229,6 +238,7 @@ class NotifierMail extends Notifier
             'message' => $this->message,
             'html' => $this->html,
             'attachments' => $this->attachments,
+            'isSuccess' => $this->isSuccess,
         ];
     }
 }

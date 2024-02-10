@@ -2,7 +2,6 @@
 
 namespace Kiwilan\Notifier\Discord;
 
-use Illuminate\Support\Facades\Log;
 use Kiwilan\Notifier\NotifierDiscord;
 use Kiwilan\Notifier\Utils\NotifierRequest;
 
@@ -19,6 +18,16 @@ abstract class DiscordContainer
 
     abstract public function toArray(): array;
 
+    public function getDiscord(): NotifierDiscord
+    {
+        return $this->discord;
+    }
+
+    public function getRequest(): ?NotifierRequest
+    {
+        return $this->request;
+    }
+
     public function isSuccess(): bool
     {
         return $this->isSuccess;
@@ -27,20 +36,9 @@ abstract class DiscordContainer
     public function send(): static
     {
         $this->request = NotifierRequest::make($this->discord->getWebhook())
-            ->requestData($this->toArray())
+            ->client($this->discord->getClient())
+            ->body($this->toArray())
             ->send();
-
-        // if ($this->client === 'stream') {
-        //     $this->request->useStream();
-        // }
-
-        // if ($this->client === 'curl') {
-        //     $this->request->useCurl();
-        // }
-
-        // if ($this->client === 'guzzle') {
-        //     $this->request->useGuzzle();
-        // }
 
         $this->isSuccess = $this->request->getStatusCode() === 204;
 

@@ -36,13 +36,14 @@ class Notifier
      *
      * @see https://api.slack.com/messaging/webhooks
      */
-    public function slack(string $webhook): NotifierSlack
+    public function slack(string $webhook, string $client = 'stream'): NotifierSlack
     {
         $self = new self();
         $self->type = 'slack';
 
         NotifierHelpers::checkIfStringIsUrl($webhook);
         NotifierHelpers::checkIfUrlContains($webhook, 'slack.com');
+        $this->setClientIfNotStream($client);
 
         return NotifierSlack::make($webhook, $this->client);
     }
@@ -54,13 +55,14 @@ class Notifier
      *
      * @see https://support.discord.com/hc/en-us/articles/228383668-Intro-to-Webhooks
      */
-    public function discord(string $webhook): NotifierDiscord
+    public function discord(string $webhook, string $client = 'stream'): NotifierDiscord
     {
         $self = new self();
         $self->type = 'discord';
 
         NotifierHelpers::checkIfStringIsUrl($webhook);
         NotifierHelpers::checkIfUrlContains($webhook, 'discord.com');
+        $this->setClientIfNotStream($client);
 
         return NotifierDiscord::make($webhook, $this->client);
     }
@@ -75,5 +77,12 @@ class Notifier
         $this->client = $client;
 
         return $this;
+    }
+
+    private function setClientIfNotStream(string $client): void
+    {
+        if ($client !== 'stream') {
+            $this->client($client);
+        }
     }
 }

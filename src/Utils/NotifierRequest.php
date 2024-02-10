@@ -4,14 +4,28 @@ namespace Kiwilan\Notifier\Utils;
 
 class NotifierRequest
 {
+    /**
+     * Create a new NotifierRequest instance.
+     *
+     * @param  string  $url  The URL to send the request to
+     * @param  string  $mode  The request mode: `stream`, `curl`, or `guzzle`
+     * @param  array  $request_headers  The request headers
+     * @param  array  $request_body  The request body
+     * @param  string  $request_method  The request method: `GET`, `POST`, `PUT`, `PATCH`, `DELETE`
+     * @param  array|null  $response_headers  The response headers
+     * @param  array|null  $response_body  The response body
+     * @param  int|null  $status_code  The status code
+     * @param  bool  $json  Whether to send the request as JSON
+     */
     protected function __construct(
         protected string $url,
         protected string $mode = 'stream',
-        protected array $headers = [],
-        protected array $request_data = [],
+        protected array $request_headers = [],
+        protected array $request_body = [],
+        protected string $request_method = 'POST',
+        protected ?array $response_headers = [],
         protected ?array $response_body = [],
         protected ?int $status_code = null,
-        protected string $method = 'POST',
         protected bool $json = true,
     ) {
     }
@@ -61,11 +75,26 @@ class NotifierRequest
     }
 
     /**
+     * Set the request mode: `stream`, `curl`, or `guzzle`.
+     */
+    public function client(string $client): self
+    {
+        $this->mode = match ($client) {
+            'stream' => 'stream',
+            'curl' => 'curl',
+            'guzzle' => 'guzzle',
+            default => 'stream',
+        };
+
+        return $this;
+    }
+
+    /**
      * Set the request data.
      */
-    public function requestData(array $data): self
+    public function body(array $body): self
     {
-        $this->request_data = $data;
+        $this->request_body = $body;
 
         return $this;
     }
@@ -75,14 +104,14 @@ class NotifierRequest
      */
     public function method(string $method): self
     {
-        $this->method = strtoupper($method);
+        $this->request_method = strtoupper($method);
 
         return $this;
     }
 
     public function headers(array $headers): self
     {
-        $this->headers = $headers;
+        $this->request_headers = $headers;
 
         return $this;
     }
@@ -129,7 +158,7 @@ class NotifierRequest
      */
     private function stream(): void
     {
-        $headers = $this->headers;
+        $headers = $this->request_headers;
         if ($this->json) {
             $headers[] = 'Content-Type: application/json';
         } else {
@@ -138,14 +167,15 @@ class NotifierRequest
 
         $context = stream_context_create([
             'http' => [
-                'method' => $this->method,
+                'method' => $this->request_method,
                 'header' => implode("\r\n", $headers),
-                'content' => $this->json ? json_encode($this->request_data) : http_build_query($this->request_data),
+                'content' => $this->json ? json_encode($this->request_body) : http_build_query($this->request_body),
             ],
         ]);
         $response = file_get_contents($this->url, false, $context);
         $headers = $http_response_header;
 
+        $this->response_headers = $headers;
         $this->status_code = (int) explode(' ', $headers[0])[1];
         $this->response_body = json_decode($response, true);
     }
@@ -156,30 +186,31 @@ class NotifierRequest
     private function curl(): void
     {
         $ch = curl_init($this->url);
-        $headers = $this->headers;
+        $headers = $this->request_headers;
         if ($this->json) {
             $headers[] = 'Content-Type: application/json';
         }
 
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
-        if ($this->method === 'POST') {
+        if ($this->request_method === 'POST') {
             curl_setopt($ch, CURLOPT_POST, 1);
-        } elseif ($this->method === 'PUT') {
+        } elseif ($this->request_method === 'PUT') {
             curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
-        } elseif ($this->method === 'PATCH') {
+        } elseif ($this->request_method === 'PATCH') {
             curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PATCH');
-        } elseif ($this->method === 'DELETE') {
+        } elseif ($this->request_method === 'DELETE') {
             curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
         }
 
-        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($this->request_data));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($this->request_body));
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
         curl_setopt($ch, CURLOPT_HEADER, 0);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
         $response = curl_exec($ch);
 
+        $this->response_headers = curl_getinfo($ch);
         $this->status_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         $this->response_body = json_decode($response, true);
 
@@ -197,10 +228,11 @@ class NotifierRequest
 
         $client = new \GuzzleHttp\Client();
         $body = $this->json ? 'json' : 'form_params';
-        $response = $client->request($this->method, $this->url, [
-            $body => $this->request_data,
+        $response = $client->request($this->request_method, $this->url, [
+            $body => $this->request_body,
         ]);
 
+        $this->response_headers = $response->getHeaders();
         $this->status_code = $response->getStatusCode();
         $this->response_body = json_decode($response->getBody()->getContents(), true);
     }
@@ -222,11 +254,29 @@ class NotifierRequest
     }
 
     /**
-     * Get the request data.
+     * Get the request method.
      */
-    public function getRequestData(): array
+    public function getRequestMethod(): string
     {
-        return $this->request_data;
+        return $this->request_method;
+    }
+
+    /**
+     * Get the request headers.
+     *
+     * @return string[]
+     */
+    public function getRequestHeaders(): array
+    {
+        return $this->request_headers;
+    }
+
+    /**
+     * Get the request body.
+     */
+    public function getRequestBody(): array
+    {
+        return $this->request_body;
     }
 
     /**
@@ -245,14 +295,28 @@ class NotifierRequest
         return $this->status_code;
     }
 
+    /**
+     * Get the response headers.
+     *
+     * @return string[]
+     */
+    public function getResponseHeaders(): ?array
+    {
+        return $this->response_headers;
+    }
+
     public function toArray(): array
     {
         return [
-            'mode' => $this->mode,
             'url' => $this->url,
-            'request_data' => $this->request_data,
+            'mode' => $this->mode,
+            'request_method' => $this->request_method,
+            'request_headers' => $this->request_headers,
+            'request_body' => $this->request_body,
+            'response_headers' => $this->response_headers,
             'response_body' => $this->response_body,
             'status_code' => $this->status_code,
+            'json' => $this->json,
         ];
     }
 }
