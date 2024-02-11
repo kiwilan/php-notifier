@@ -112,7 +112,7 @@ class NotifierMail extends Notifier
 
     public function replyTo(string $replyTo, ?string $name = null): self
     {
-        $this->replyTo = new Address($replyTo, $name);
+        $this->replyTo = new Address($replyTo, $name ?? '');
 
         return $this;
     }

@@ -57,3 +57,8 @@ function getLog(): string
 
     return $matches[1];
 }
+
+function getApiUrl(): string
+{
+    return 'https://jsonplaceholder.typicode.com/posts';
+}

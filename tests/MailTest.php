@@ -25,7 +25,21 @@ it('can use', function () {
         ->from($dotenv['NOTIFIER_MAIL_FROM_ADDRESS'], 'Kiwilan')
         ->to($dotenv['NOTIFIER_MAIL_TO_ADDRESS'], 'Kiwilan')
         ->send(mock());
+    expect($notifier->isSuccess())->toBeTrue();
 
+    $notifier = createConfig()
+        ->subject('Hello, Mail!')
+        ->html('<h1>Hello, Mail!</h1>')
+        ->from($dotenv['NOTIFIER_MAIL_FROM_ADDRESS'], 'Kiwilan')
+        ->to($dotenv['NOTIFIER_MAIL_TO_ADDRESS'], 'Kiwilan')
+        ->send(mock());
+    expect($notifier->isSuccess())->toBeTrue();
+
+    $notifier = createConfig()
+        ->subject('Hello, Mail!')
+        ->from($dotenv['NOTIFIER_MAIL_FROM_ADDRESS'], 'Kiwilan')
+        ->to($dotenv['NOTIFIER_MAIL_TO_ADDRESS'], 'Kiwilan')
+        ->send(mock());
     expect($notifier->isSuccess())->toBeTrue();
 });
 
@@ -35,10 +49,13 @@ it('can use attachment', function () {
     $notifier = createConfig()
         ->subject('Hello, Mail!')
         ->message('Hello, Mail!')
+        ->html('<h1>Hello, Mail!</h1>')
         ->from($dotenv['NOTIFIER_MAIL_FROM_ADDRESS'], 'Kiwilan')
         ->to($dotenv['NOTIFIER_MAIL_TO_ADDRESS'], 'Kiwilan')
+        ->replyTo($dotenv['NOTIFIER_MAIL_FROM_ADDRESS'], 'Kiwilan')
         ->addAttachment(__DIR__.'/media/text.md', 'text.md')
         ->send(mock());
 
     expect($notifier->isSuccess())->toBeTrue();
+    expect($notifier->toArray())->toBeArray();
 });

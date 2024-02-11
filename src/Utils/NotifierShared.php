@@ -20,7 +20,7 @@ class NotifierShared
     /**
      * @param  string|string[]|null  $message
      */
-    public static function arrayToString(array|string $message): ?string
+    public static function arrayToString(mixed $message): ?string
     {
         if (! $message) {
             return null;

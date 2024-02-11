@@ -20,4 +20,7 @@ it('can use shared', function () {
 
     $default = NotifierShared::getShortcutColor('default');
     expect($default)->toBe('22c55e');
+
+    $arrayToString = NotifierShared::arrayToString(null);
+    expect($arrayToString)->toBeNull();
 });
