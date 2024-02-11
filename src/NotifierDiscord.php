@@ -19,7 +19,7 @@ class NotifierDiscord extends Notifier
     ) {
     }
 
-    public static function make(string $webhook, string $client): self
+    public static function make(?string $webhook, string $client = 'stream'): self
     {
         return new self($webhook, $client);
     }

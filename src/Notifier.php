@@ -36,7 +36,7 @@ class Notifier
      *
      * @see https://api.slack.com/messaging/webhooks
      */
-    public function slack(string $webhook, string $client = 'stream'): NotifierSlack
+    public function slack(?string $webhook, string $client = 'stream'): NotifierSlack
     {
         $self = new self();
         $self->type = 'slack';
@@ -55,7 +55,7 @@ class Notifier
      *
      * @see https://support.discord.com/hc/en-us/articles/228383668-Intro-to-Webhooks
      */
-    public function discord(string $webhook, string $client = 'stream'): NotifierDiscord
+    public function discord(?string $webhook, string $client = 'stream'): NotifierDiscord
     {
         $self = new self();
         $self->type = 'discord';
@@ -72,7 +72,7 @@ class Notifier
      *
      * @param  string  $url  Any URL, like `https://example.com`
      */
-    public function http(string $url, string $client = 'stream'): NotifierHttp
+    public function http(?string $url, string $client = 'stream'): NotifierHttp
     {
         $self = new self();
         $self->type = 'request';
