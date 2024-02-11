@@ -2,6 +2,11 @@
 
 All notable changes to `php-notifier` will be documented in this file.
 
+## v0.0.32 - 2024-02-11
+
+- add `Closure` logs
+- add autoConfig for `mail`
+
 ## v0.0.31 - 2024-02-11
 
 Hotfix v0.0.3
