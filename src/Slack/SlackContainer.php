@@ -33,10 +33,9 @@ abstract class SlackContainer
         $this->isSuccess = $this->request->getStatusCode() === 200;
 
         if ($this->isSuccess) {
-            // Log::error("Notifier: slack notification failed with HTTP {$this->request->getStatusCode()}", [
-            //     $this->request->toArray(),
-            // ]);
-            // dump($this);
+            $this->slack->getLogSent($this->request->toArray());
+        } else {
+            $this->slack->getLogError('Slack notification failed with HTTP '.$this->request->getStatusCode(), $this->request->toArray());
         }
 
         return $this;

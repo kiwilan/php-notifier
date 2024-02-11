@@ -2,6 +2,7 @@
 
 namespace Kiwilan\Notifier;
 
+use Closure;
 use Kiwilan\Notifier\Slack\SlackAttachment;
 use Kiwilan\Notifier\Slack\SlackBlocks;
 use Kiwilan\Notifier\Slack\SlackMessage;
@@ -16,6 +17,8 @@ class NotifierSlack extends Notifier
     protected function __construct(
         protected string $webhook,
         protected string $client = 'stream',
+        protected ?Closure $logError = null,
+        protected ?Closure $logSent = null,
     ) {
     }
 
@@ -62,5 +65,33 @@ class NotifierSlack extends Notifier
     public function getClient(): string
     {
         return $this->client;
+    }
+
+    public function logError(Closure $closure): self
+    {
+        $this->logError = $closure;
+
+        return $this;
+    }
+
+    public function getLogError(string $reason, array $data = []): void
+    {
+        if ($this->logError) {
+            ($this->logError)($reason, $data);
+        }
+    }
+
+    public function logSent(Closure $closure): self
+    {
+        $this->logSent = $closure;
+
+        return $this;
+    }
+
+    public function getLogSent(array $data = []): void
+    {
+        if ($this->logSent) {
+            ($this->logSent)($data);
+        }
     }
 }

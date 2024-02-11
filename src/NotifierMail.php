@@ -2,6 +2,7 @@
 
 namespace Kiwilan\Notifier;
 
+use Closure;
 use Kiwilan\Notifier\Utils\NotifierShared;
 use Symfony\Component\Mailer\Mailer;
 use Symfony\Component\Mailer\Transport;
@@ -13,6 +14,17 @@ class NotifierMail extends Notifier
 {
     /**
      * @param  Address[]  $to  Array of `Address` object
+     * @param  array{
+     *  mailer: string,
+     *  host: string,
+     *  port: int,
+     *  encryption: string,
+     *  username: string,
+     *  password: string,
+     *  from: Address,
+     *  to: Address[],
+     *  subject: string
+     * }  $autoConfig
      */
     protected function __construct(
         protected ?string $mailer = null,
@@ -32,12 +44,101 @@ class NotifierMail extends Notifier
         protected ?string $html = null,
         protected array $attachments = [],
         protected bool $isSuccess = false,
+
+        protected array $autoConfig = [],
+        protected ?Closure $logSending = null,
+        protected ?Closure $logError = null,
+        protected ?Closure $logSent = null,
     ) {
     }
 
     public static function make(): self
     {
         return new self();
+    }
+
+    /**
+     * Set auto config to complete the missing properties.
+     *
+     * @param  array{
+     *  mailer: string,
+     *  host: string,
+     *  port: int,
+     *  encryption: string,
+     *  username: string,
+     *  password: string,
+     *  from: Address,
+     *  to: Address[],
+     *  subject: string
+     * }  $autoConfig
+     */
+    public function autoConfig(array $autoConfig): self
+    {
+        $this->autoConfig = $autoConfig;
+
+        return $this;
+    }
+
+    public function logSending(Closure $closure): self
+    {
+        $this->logSending = $closure;
+
+        return $this;
+    }
+
+    public function logError(Closure $closure): self
+    {
+        $this->logError = $closure;
+
+        return $this;
+    }
+
+    public function logSent(Closure $closure): self
+    {
+        $this->logSent = $closure;
+
+        return $this;
+    }
+
+    private function parseAutoConfig(): self
+    {
+        if (! $this->mailer && $this->autoConfig['mailer']) {
+            $this->mailer = $this->autoConfig['mailer'];
+        }
+
+        if (! $this->host && $this->autoConfig['host']) {
+            $this->host = $this->autoConfig['host'];
+        }
+
+        if (! $this->port && $this->autoConfig['port']) {
+            $this->port = intval($this->autoConfig['port']);
+        }
+
+        if (! $this->encryption && $this->autoConfig['encryption']) {
+            $this->encryption = $this->autoConfig['encryption'];
+        }
+
+        if (! $this->username && $this->autoConfig['username']) {
+            $this->username = $this->autoConfig['username'];
+        }
+
+        if (! $this->password && $this->autoConfig['password']) {
+            $this->password = $this->autoConfig['password'];
+        }
+
+        if (! $this->from && $this->autoConfig['from']) {
+            $this->from = $this->autoConfig['from'];
+        }
+
+        if (count($this->to) === 0 && $this->autoConfig['to']) {
+            $this->to = $this->autoConfig['to'];
+        }
+
+        if (! $this->subject && $this->autoConfig['subject']) {
+            $this->subject = $this->autoConfig['subject'];
+        }
+
+        return $this;
     }
 
     /**
@@ -164,10 +265,10 @@ class NotifierMail extends Notifier
 
     public function send(bool $mock = false): self
     {
+        $this->parseAutoConfig();
+
         $this->mailer_transport = Transport::fromDsn("{$this->mailer}://{$this->host}:{$this->port}");
         $this->mailer_instance = new Mailer($this->mailer_transport);
-
-        // $this->logSending("{$this->mailer}://{$this->host}:{$this->port}");
 
         $this->mailer_email = (new Email())
             ->to(...$this->to)
@@ -208,6 +309,10 @@ class NotifierMail extends Notifier
             }
         }
 
+        if ($this->logSending) {
+            ($this->logSending)($this->toArray());
+        }
+
         if ($mock) {
             $this->isSuccess = true;
 
@@ -217,13 +322,20 @@ class NotifierMail extends Notifier
         try {
             $this->mailer_instance->send($this->mailer_email);
         } catch (\Throwable $th) {
-            // $this->logError($th->getMessage(), $this->toArray());
+            if ($this->logError) {
+                ($this->logError)($th->getMessage(), $this->toArray());
+            } else {
+                $data = json_encode($this->toArray());
+                error_log($th->getMessage().': '.$data);
+            }
 
             return $this;
         }
 
         $this->isSuccess = true;
-        // $this->logSent();
+        if ($this->logSent) {
+            ($this->logSent)($this->toArray());
+        }
 
         return $this;
     }
@@ -245,6 +357,7 @@ class NotifierMail extends Notifier
             'html' => $this->html,
             'attachments' => $this->attachments,
             'isSuccess' => $this->isSuccess,
+            'autoConfig' => $this->autoConfig,
         ];
     }
 }
