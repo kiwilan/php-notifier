@@ -16,9 +16,9 @@ class NotifierHttp extends Notifier
     ) {
     }
 
-    public static function make(string $webhook, string $client): self
+    public static function make(string $url, string $client = 'stream'): self
     {
-        return new self($webhook, $client);
+        return new self($url, $client);
     }
 
     /**
