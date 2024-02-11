@@ -166,6 +166,23 @@ $slack = $notifier->slack($webhook)
     ->send();
 ```
 
+### HTTP
+
+You can use `http` method to send HTTP request.
+
+```php
+use Kiwilan\Notifier\Notifier;
+
+$notifier = new Notifier();
+$http = $notifier->http('https://jsonplaceholder.typicode.com/posts')
+    ->method('POST')
+    ->send();
+
+$statusCode = $http->getStatusCode();
+$body = $http->getResponseBody();
+$headers = $http->getResponseHeaders();
+```
+
 ### Client
 
 HTTP requests use native stream context to send data, `curl` and `guzzle` can be used as option (default is `stream`).
