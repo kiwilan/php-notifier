@@ -61,18 +61,18 @@ class NotifierMail extends Notifier
      * Set auto config to complete the missing properties.
      *
      * @param  array{
-     *  mailer: string,
-     *  host: string,
-     *  port: int,
-     *  encryption: string,
-     *  username: string,
-     *  password: string,
-     *  from: Address,
-     *  to: Address[],
-     *  subject: string
-     * }  $autoConfig
+     *  mailer: mixed,
+     *  host: mixed,
+     *  port: mixed,
+     *  encryption: mixed,
+     *  username: mixed,
+     *  password: mixed,
+     *  from: ?Address,
+     *  to: Address[]|null,
+     *  subject: mixed,
+     * }|null  $autoConfig
      */
-    public function autoConfig(array $autoConfig): self
+    public function autoConfig(?array $autoConfig): self
     {
         $this->autoConfig = $autoConfig;
 

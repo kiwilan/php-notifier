@@ -128,7 +128,7 @@ class SlackAttachment extends SlackContainer
     /**
      * Add fields to the attachment
      *
-     * @param  array{array{name: ?string, value: mixed, short: ?bool}}  $fields  Array of fields, each field should have `name` and `value`
+     * @param  array{array{name: ?string, value: mixed, short: ?bool}}  $fields  Array of fields, each field should have `name`, `value` and `short`
      */
     public function fields(array $fields): self
     {
