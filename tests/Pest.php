@@ -40,7 +40,16 @@ function getDotenv(string $key): string
 
 function mock(): bool
 {
-    return (bool) dotenv()['NOTIFIER_MOCK'] ?? false;
+    $mock = dotenv()['NOTIFIER_MOCK'];
+    if (! $mock) {
+        return false;
+    }
+
+    if ($mock === 'true' || $mock === true) {
+        return true;
+    }
+
+    return false;
 }
 
 function getLog(): string

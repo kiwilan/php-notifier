@@ -15,16 +15,16 @@ class NotifierMail extends Notifier
     /**
      * @param  Address[]  $to  Array of `Address` object
      * @param  array{
-     *  mailer: string,
-     *  host: string,
-     *  port: int,
-     *  encryption: string,
-     *  username: string,
-     *  password: string,
-     *  from: Address,
-     *  to: Address[],
-     *  subject: string
-     * }  $autoConfig
+     *  mailer: ?string,
+     *  host: ?string,
+     *  port: ?int,
+     *  encryption: ?string,
+     *  username: ?string,
+     *  password: ?string,
+     *  from: ?Address,
+     *  to: Address[]|null,
+     *  subject: ?string
+     * }|null  $autoConfig
      */
     protected function __construct(
         protected ?string $mailer = null,
@@ -45,7 +45,7 @@ class NotifierMail extends Notifier
         protected array $attachments = [],
         protected bool $isSuccess = false,
 
-        protected array $autoConfig = [],
+        protected ?array $autoConfig = null,
         protected ?Closure $logSending = null,
         protected ?Closure $logError = null,
         protected ?Closure $logSent = null,
@@ -102,6 +102,10 @@ class NotifierMail extends Notifier
 
     private function parseAutoConfig(): self
     {
+        if (! $this->autoConfig) {
+            return $this;
+        }
+
         if (! $this->mailer && $this->autoConfig['mailer']) {
             $this->mailer = $this->autoConfig['mailer'];
         }

@@ -46,14 +46,13 @@ it('can use attachment', function () {
         ->text('Optional text that appears within the attachment')
         ->fields([
             [
-                'title' => 'Priority',
+                'name' => 'Priority',
                 'value' => 'High',
                 'short' => false,
             ],
             [
-                'title' => 'Priority',
+                'name' => 'Priority',
                 'value' => 'High',
-                'short' => false,
             ],
         ])
         ->imageUrl('http://my-website.com/path/to/image.jpg')

@@ -148,7 +148,7 @@ class DiscordRich extends DiscordContainer
     /**
      * Add fields to rich embed
      *
-     * @param  array{name: string, value: mixed}  $fields  Array of fields, each field should have `name` and `value`
+     * @param  array{array{name: ?string, value: mixed}}  $fields  Array of fields, each field should have `name` and `value`
      * @param  bool  $inline  Set to `true` if you want to display fields inline
      */
     public function fields(array $fields, bool $inline = false): self

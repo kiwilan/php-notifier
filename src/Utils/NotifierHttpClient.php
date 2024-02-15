@@ -140,11 +140,11 @@ class NotifierHttpClient
 
         try {
             if ($this->mode === 'stream') {
-                $this->stream($mock);
+                $this->stream();
             } elseif ($this->mode === 'curl') {
-                $this->curl($mock);
+                $this->curl();
             } elseif ($this->mode === 'guzzle') {
-                $this->guzzle($mock);
+                $this->guzzle();
             } else {
                 throw new \Exception('Invalid request mode.');
             }
