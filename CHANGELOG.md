@@ -2,6 +2,10 @@
 
 All notable changes to `php-notifier` will be documented in this file.
 
+## v0.0.33 - 2024-02-15
+
+Add monitoring for errors.
+
 ## v0.0.32 - 2024-02-11
 
 - add `Closure` logs
