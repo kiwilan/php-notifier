@@ -78,6 +78,8 @@ class NotifierSlack extends Notifier
     {
         if ($this->logError) {
             ($this->logError)($reason, $data);
+        } else {
+            NotifierShared::logError($reason, $data);
         }
     }
 

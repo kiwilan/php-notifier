@@ -43,9 +43,9 @@ abstract class DiscordContainer
         $this->isSuccess = $this->request->getStatusCode() === 204 || $this->request->getStatusCode() === 200;
 
         if ($this->isSuccess) {
-            // Log::error("Notifier: discord notification failed with HTTP {$this->request->getStatusCode()}", [
-            //     $this->request->toArray(),
-            // ]);
+            $this->discord->getLogSent($this->request->toArray());
+        } else {
+            $this->discord->getLogError('Discord notification failed with HTTP '.$this->request->getStatusCode(), $this->request->toArray());
         }
 
         return $this;

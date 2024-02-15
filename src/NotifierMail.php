@@ -325,8 +325,7 @@ class NotifierMail extends Notifier
             if ($this->logError) {
                 ($this->logError)($th->getMessage(), $this->toArray());
             } else {
-                $data = json_encode($this->toArray());
-                error_log($th->getMessage().': '.$data);
+                NotifierShared::logError($th->getMessage(), $this->toArray());
             }
 
             return $this;

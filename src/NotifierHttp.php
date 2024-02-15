@@ -4,6 +4,7 @@ namespace Kiwilan\Notifier;
 
 use Closure;
 use Kiwilan\Notifier\Utils\NotifierHttpClient;
+use Kiwilan\Notifier\Utils\NotifierShared;
 
 class NotifierHttp extends Notifier
 {
@@ -68,7 +69,7 @@ class NotifierHttp extends Notifier
             if ($this->logError) {
                 $this->getLogError('HTTP '.$statusCode, $this->request->toArray());
             } else {
-                error_log('HTTP '.$statusCode.': '.json_encode($this->request->toArray()));
+                NotifierShared::logError('HTTP '.$statusCode, $this->request->toArray());
             }
 
             return $this;

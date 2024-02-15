@@ -56,4 +56,9 @@ class NotifierShared
             default => '22c55e',
         };
     }
+
+    public static function logError(string $reason, array $data = []): void
+    {
+        error_log($reason.PHP_EOL.json_encode($data, JSON_PRETTY_PRINT));
+    }
 }
