@@ -2,6 +2,10 @@
 
 All notable changes to `php-notifier` will be documented in this file.
 
+## v0.0.34 - 2024-02-15
+
+Improve `fields()` for Discord and Slack
+
 ## v0.0.33 - 2024-02-15
 
 Add monitoring for errors.
