@@ -8,6 +8,9 @@ use Kiwilan\Notifier\Utils\NotifierShared;
 
 class SlackAttachment extends SlackContainer
 {
+    /**
+     * @param  array{name: string, value: string, short: bool}  $fields  Array of fields, each field should have `name` and `value`
+     */
     protected function __construct(
         protected ?string $messageText = null,
         protected ?string $color = null,
@@ -125,11 +128,24 @@ class SlackAttachment extends SlackContainer
     /**
      * Add fields to the attachment
      *
-     * @param  array{name: string, value: string|int, short: bool}  $fields  Array of fields, each field should have `name` and `value`
+     * @param  array{name: string, value: mixed, short: bool}  $fields  Array of fields, each field should have `name` and `value`
      */
     public function fields(array $fields): self
     {
-        $this->fields = $fields;
+        // $this->fields = $fields;
+
+        foreach ($fields as $field) {
+            $value = $field['value'] ?? 'Value';
+            if (! is_string($value)) {
+                $value = json_encode($value);
+            }
+
+            $this->fields[] = [
+                'name' => $field['name'] ?? 'Field',
+                'value' => NotifierShared::truncate($value),
+                'inline' => $field['short'] ?? false,
+            ];
+        }
 
         return $this;
     }

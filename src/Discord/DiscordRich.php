@@ -148,15 +148,20 @@ class DiscordRich extends DiscordContainer
     /**
      * Add fields to rich embed
      *
-     * @param  array{name: string, value: string|int}  $fields  Array of fields, each field should have `name` and `value`
+     * @param  array{name: string, value: mixed}  $fields  Array of fields, each field should have `name` and `value`
      * @param  bool  $inline  Set to `true` if you want to display fields inline
      */
     public function fields(array $fields, bool $inline = false): self
     {
         foreach ($fields as $field) {
+            $value = $field['value'] ?? 'Value';
+            if (! is_string($value)) {
+                $value = json_encode($value);
+            }
+
             $this->fields[] = [
                 'name' => $field['name'] ?? 'Field',
-                'value' => $field['value'] ?? 'Value',
+                'value' => NotifierShared::truncate($value),
                 'inline' => $inline,
             ];
         }
