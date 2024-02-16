@@ -2,6 +2,10 @@
 
 All notable changes to `php-notifier` will be documented in this file.
 
+## v0.0.38 - 2024-02-16
+
+`SlackAttachment::class` fix `fields()`
+
 ## v0.0.37 - 2024-02-16
 
 `DiscordRich::class` and `DiscordMessage::class` fix `user()`
