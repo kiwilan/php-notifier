@@ -139,7 +139,7 @@ class SlackAttachment extends SlackContainer
             }
 
             $this->fields[] = [
-                'name' => $field['name'] ?? 'Field',
+                'title' => $field['name'] ?? 'Field',
                 'value' => NotifierShared::truncate($value),
                 'inline' => $field['short'] ?? false,
             ];
