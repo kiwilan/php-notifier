@@ -26,7 +26,9 @@ class DiscordMessage extends DiscordContainer
 
     public function user(string $username, ?string $avatarUrl = null): self
     {
-        $this->username = $username;
+        if (! empty($username)) {
+            $this->username = $username;
+        }
 
         if ($avatarUrl) {
             $this->avatarUrl = $avatarUrl;
