@@ -2,6 +2,10 @@
 
 All notable changes to `php-notifier` will be documented in this file.
 
+## v0.0.37 - 2024-02-16
+
+`DiscordRich::class` and `DiscordMessage::class` fix `user()`
+
 ## v0.0.36 - 2024-02-15
 
 Improve php doc
