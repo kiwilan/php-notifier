@@ -1,7 +1,7 @@
 {
     "name": "kiwilan/php-notifier",
     "description": "PHP Notifier is a package to send mails or notifications for Discord or Slack.",
-    "version": "0.0.38",
+    "version": "0.0.39",
     "keywords": [
         "notifier",
         "slack",
