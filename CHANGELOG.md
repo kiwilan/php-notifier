@@ -2,6 +2,10 @@
 
 All notable changes to `php-notifier` will be documented in this file.
 
+## v0.0.39 - 2024-03-16
+
+`symfony/mailer`: `^6.4 || ^7`
+
 ## v0.0.38 - 2024-02-16
 
 `SlackAttachment::class` fix `fields()`
