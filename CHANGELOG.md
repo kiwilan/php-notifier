@@ -2,6 +2,10 @@
 
 All notable changes to `php-notifier` will be documented in this file.
 
+## v0.0.40 - 2024-05-02
+
+Add nullable URL option to avoid crash.
+
 ## v0.0.39 - 2024-03-16
 
 `symfony/mailer`: `^6.4 || ^7`
