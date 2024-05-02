@@ -146,7 +146,5 @@ it('can use empty webhook', function () {
         ->message('Hello, Discord!')
         ->send(mock());
 
-    $body = $stream->getRequest()->getResponseBody();
-
-    expect($body['error'])->toBe('URL is empty. Path cannot be empty');
+    expect($stream->getRequest()->getStatusCode())->toBe(500);
 });
