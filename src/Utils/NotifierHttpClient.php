@@ -37,7 +37,8 @@ class NotifierHttpClient
     public static function make(?string $url)
     {
         if (! $url) {
-            throw new \Exception('URL is required.');
+            NotifierShared::logError('URL is required.');
+            $url = '';
         }
 
         $url = trim($url);
@@ -150,8 +151,18 @@ class NotifierHttpClient
             }
         } catch (\Throwable $th) {
             $this->status_code = 500;
+
+            $message = null;
+            if (! $this->url) {
+                $message = 'URL is empty.';
+            }
+
+            if ($th->getMessage()) {
+                $message = $message.' '.$th->getMessage();
+            }
+
             $this->response_body = [
-                'error' => $th->getMessage(),
+                'error' => $message,
             ];
         }
 

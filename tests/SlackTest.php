@@ -61,3 +61,15 @@ it('can use attachment', function () {
         ->send(mock());
     expect($notifier->isSuccess())->toBeTrue();
 });
+
+it('can use empty webhook', function () {
+    $notifier = new Notifier();
+    $stream = $notifier->client('stream')
+        ->discord(null)
+        ->message('Hello, Discord!')
+        ->send(mock());
+
+    $body = $stream->getRequest()->getResponseBody();
+
+    expect($body['error'])->toBe('URL is empty. Path cannot be empty');
+});

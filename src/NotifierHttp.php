@@ -9,7 +9,7 @@ use Kiwilan\Notifier\Utils\NotifierShared;
 class NotifierHttp extends Notifier
 {
     protected function __construct(
-        protected string $url,
+        protected ?string $url,
         protected string $client = 'stream',
         protected string $method = 'GET',
         protected array $headers = [],
@@ -20,7 +20,7 @@ class NotifierHttp extends Notifier
     ) {
     }
 
-    public static function make(string $url, string $client = 'stream'): self
+    public static function make(?string $url, string $client = 'stream'): self
     {
         return new self($url, $client);
     }
@@ -54,16 +54,21 @@ class NotifierHttp extends Notifier
 
     public function send(bool $mock = false): self
     {
-        $this->request = NotifierHttpClient::make($this->url)
-            ->client($this->client)
-            ->method($this->method)
-            ->headers($this->headers)
-            ->body($this->body)
-            ->send($mock);
+        $statusCode = 500;
+        $isSuccess = false;
 
-        $statusCode = $this->request->getStatusCode();
-        $okList = [200, 201, 202, 204];
-        $isSuccess = in_array($statusCode, $okList);
+        if ($this->url) {
+            $this->request = NotifierHttpClient::make($this->url)
+                ->client($this->client)
+                ->method($this->method)
+                ->headers($this->headers)
+                ->body($this->body)
+                ->send($mock);
+
+            $statusCode = $this->request->getStatusCode();
+            $okList = [200, 201, 202, 204];
+            $isSuccess = in_array($statusCode, $okList);
+        }
 
         if (! $isSuccess) {
             if ($this->logError) {
@@ -82,7 +87,7 @@ class NotifierHttp extends Notifier
         return $this;
     }
 
-    public function getUrl(): string
+    public function getUrl(): ?string
     {
         return $this->url;
     }

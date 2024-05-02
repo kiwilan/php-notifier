@@ -33,17 +33,29 @@ class NotifierShared
         return implode(PHP_EOL, $message);
     }
 
-    public static function checkIfStringIsUrl(string $string): void
+    public static function checkIfStringIsUrl(?string $string): void
     {
+        if (! $string) {
+            NotifierShared::logError('Webhook URL is empty.');
+
+            return;
+        }
+
         if (! filter_var($string, FILTER_VALIDATE_URL)) {
-            throw new \InvalidArgumentException("Webhook `{$string}` is not a valid URL.");
+            NotifierShared::logError("Webhook `{$string}` is not a valid URL.");
         }
     }
 
-    public static function checkIfUrlContains(string $url, string $string): void
+    public static function checkIfUrlContains(?string $url, string $string): void
     {
+        if (! $url) {
+            NotifierShared::logError('Webhook URL is empty.');
+
+            return;
+        }
+
         if (! str_contains($url, $string)) {
-            throw new \InvalidArgumentException("Webhook `{$url}` does not contain `{$string}`.");
+            throw new \Exception("Webhook `{$url}` does not contain `{$string}`.");
         }
     }
 

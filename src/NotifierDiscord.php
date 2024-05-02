@@ -15,7 +15,7 @@ use Kiwilan\Notifier\Utils\NotifierShared;
 class NotifierDiscord extends Notifier
 {
     protected function __construct(
-        protected string $webhook,
+        protected ?string $webhook,
         protected string $client = 'stream',
         protected ?Closure $logError = null,
         protected ?Closure $logSent = null,
@@ -47,7 +47,7 @@ class NotifierDiscord extends Notifier
         return DiscordRich::create($this, $message);
     }
 
-    public function getWebhook(): string
+    public function getWebhook(): ?string
     {
         return $this->webhook;
     }
